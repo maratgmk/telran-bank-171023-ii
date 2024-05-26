@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
+
 @Controller
 public class AccountController {
 
@@ -24,9 +26,19 @@ public class AccountController {
     @RequestMapping(value = "/account/balance", method = RequestMethod.GET)
     @ResponseBody
     public String accountBalancer(@RequestParam("accountId") String accountId, @RequestParam("accountType") String accountType) {
-        int balance = accountBalanceStorage.getBalance(accountId);
+        int balance = accountBalanceStorage.getBalance(accountId, accountType);
         return "The balance for  accountId = " + accountId + " is " + balance + " on " + accountType;
         //  return "<html><body><h1>Hello world</h1></body></html>";
+    }
+
+    @RequestMapping(value = "/account/balance", method = RequestMethod.POST)
+    @ResponseBody
+    public String topupAccountBalance(@RequestParam("accountId") String accountId,
+                                      @RequestParam("accountType") String accountType,
+                                      @RequestParam("amount") BigDecimal amount) {
+        accountBalanceStorage.addToAccount(accountId, accountType, amount);
+        return "The balance is updated ";
+
     }
 
 

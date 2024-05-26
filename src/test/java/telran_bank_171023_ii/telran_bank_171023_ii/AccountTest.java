@@ -40,7 +40,7 @@ public class AccountTest {
 
     @Test
     void shouldCheckBalanceInStorage() {
-        Assertions.assertEquals(accountBalanceStorage.getBalance("3"), 1235);
+        Assertions.assertEquals(accountBalanceStorage.getBalance("3", "saving"));
     }
 
     @Test
